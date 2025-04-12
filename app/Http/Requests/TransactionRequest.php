@@ -24,7 +24,7 @@ class TransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'transaction_type' => ['required', new Enum(TransactionType::class)],
+            'type'             => ['required', new Enum(TransactionType::class)],
             'category'         => 'required',
             'amount'           => 'required',
             'date'             => 'required',
@@ -38,7 +38,7 @@ class TransactionRequest extends FormRequest
     {
         return [
             'code'             => Str::uuid(),
-            'transaction_type' => $this->transaction_type,
+            'transaction_type' => $this->type,
             'category_id'      => $this->category,
             'amount'           => $this->amount,
             'transaction_date' => $this->date,

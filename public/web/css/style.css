@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap');
+
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+.ft-fw-light {
+    font-weight: 300;
+    font-style: normal;
+}
+
+.ft-fw-regular {
+    font-weight: 400;
+    font-style: normal;
+}
+
+.ft-fw-semibold {
+    font-weight: 600;
+    font-style: normal;
+}
+
+.ft-fw-bold {
+    font-weight: 700;
+    font-style: normal;
+}
+
+.btn:hover {
+    transition: .5s !important;
+}
+
+.ft-card {
+    border-radius: 20px;
+}
+
+.ft-transactions-list {
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.ft-transaction-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.ft-transaction-success {
+    background-color: var(--bs-success);
+}
+
+.ft-transaction-danger {
+    background-color: var(--bs-danger);
+}
+
+.ft-transaction-icon i {
+    font-size: 20pt;
+    color:  var(--bs-light);
+}
+
+.ft-transaction-title {
+    font-size: 11pt;
+}
+
+.ft-transaction-desc {
+    font-size: 10pt;
+}
+
+.ft-transaction-action {
+    cursor: pointer;
+}
+
+.ft-transaction-action .btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 11pt;
+}
