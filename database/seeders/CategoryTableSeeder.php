@@ -1,8 +1,11 @@
 <?php
 namespace Database\Seeders;
 
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use App\Interfaces\CategoryInterface;
+use Illuminate\Support\Facades\Schema;
 
 class CategoryTableSeeder extends Seeder
 {
@@ -12,6 +15,7 @@ class CategoryTableSeeder extends Seeder
     protected $categories = [
         [
             'name'     => 'Income',
+            'slug'     => 'income',
             'children' => [
                 [
                     'name' => 'Business',
@@ -35,6 +39,7 @@ class CategoryTableSeeder extends Seeder
         ],
         [
             'name'     => 'Expense',
+            'slug'     => 'expense',
             'children' => [
                 [
                     'name' => 'Bills',
@@ -63,15 +68,22 @@ class CategoryTableSeeder extends Seeder
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        Category::truncate();
+
         foreach ($this->categories as $key => $value) {
-            $category = app(CategoryInterface::class)->createCategory($value);
+            $children = $value['children'] ?? [];
             
-            if (array_key_exists('children', $value)) {
+            unset($value['children']);
+            $category = app(CategoryInterface::class)->createCategory($value);
+
+            foreach ($children as $key => $child) {
                 app(CategoryInterface::class)->createCategory(array_merge(
                     [
                         'parent_id' => $category->id,
+                        'slug'      => $category->slug . '-' . Str::slug($child['name']),
                     ],
-                    $value
+                    $child
                 ));
             }
         }
