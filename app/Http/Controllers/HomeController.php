@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Enum\TransactionType;
+use Illuminate\Support\Facades\DB;
 use App\Interfaces\CategoryInterface;
 use App\Interfaces\TransactionInterface;
 use App\Http\Requests\TransactionRequest;
@@ -27,7 +28,7 @@ class HomeController extends Controller
     {
         $this->meta->setTitle('Manage Expense & Income');
 
-        $transactions = TransactionQuery::apply($request)->get();
+        $transactions = TransactionQuery::apply($request)->orderBy('transaction_date', 'DESC')->get();
         $categoryRepo = app(CategoryInterface::class);
 
         $data = [
@@ -37,6 +38,22 @@ class HomeController extends Controller
         ];
 
         return view('home', compact('transactions', 'data'));
+    }
+
+    public function chartData(Request $request)
+    {
+        $transactions = TransactionQuery::apply($request)->with('category')
+            ->select('category_id', DB::raw('SUM(amount) as total'))
+            ->groupBy('category_id')
+            ->get()
+            ->map(function ($transaction) {
+                return [
+                    'category' => $transaction->category->name,
+                    'total'    => $transaction->total,
+                ];
+            });
+
+        return response()->json($transactions);
     }
 
     /**

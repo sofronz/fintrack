@@ -25,22 +25,27 @@
                     <label for="exampleFormControlInput1" class="form-label">
                         Category
                     </label>
-                    <select class="form-select {{ old('type', 'EXPENSE') == 'EXPENSE' ? '' : 'd-none' }}" name="category" id="categoryExpense"
-                        aria-label="Select category of expense">
+                    <select class="form-select {{ old('type', 'EXPENSE') == 'EXPENSE' ? '' : 'd-none' }}"
+                        name="category_expense" id="categoryExpense" aria-label="Select category of expense">
                         @foreach ($data['expenses'] as $expense)
-                            <option value="{{ $expense->id }}" {{ old('category') == $expense->id ? 'selected' : '' }}>
+                            <option value="{{ $expense->id }}" {{ old('category_expense') == $expense->id ? 'selected' : '' }}>
                                 {{ $expense->name }}
                             </option>
                         @endforeach
                     </select>
-                    <select class="form-select {{ old('type', 'EXPENSE') == 'INCOME' ? '' : 'd-none' }}" name="category" id="categoryIncome" aria-label="Select category of income">
+                    <select class="form-select {{ old('type', 'EXPENSE') == 'INCOME' ? '' : 'd-none' }}" name="category_income"
+                        id="categoryIncome" aria-label="Select category of income">
                         @foreach ($data['incomes'] as $income)
-                            <option value="{{ $income->id }}" {{ old('category') == $income->id ? 'selected' : '' }}>
+                            <option value="{{ $income->id }}"
+                                {{ old('category_income') == $income->id ? 'selected' : '' }}>
                                 {{ $income->name }}
                             </option>
                         @endforeach
                     </select>
-                    @error('category')
+                    @error('category_income')
+                        <div class="text-danger fst-italic">{{ $message }}</div>
+                    @enderror
+                    @error('category_expense')
                         <div class="text-danger fst-italic">{{ $message }}</div>
                     @enderror
                 </div>
@@ -52,7 +57,8 @@
                     </label>
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon1">$</span>
-                        <input type="text" name="amount" class="form-control amount-input" id="amountInput" value="{{ old('amount') }}">
+                        <input type="text" name="amount" class="form-control amount-input" id="amountInput"
+                            value="{{ old('amount') }}">
                     </div>
                     @error('amount')
                         <div class="text-danger fst-italic">{{ $message }}</div>
@@ -64,7 +70,8 @@
                     <label for="dateInput" class="form-label">
                         Date
                     </label>
-                    <input type="date" name="date" class="form-control" id="dateInput" value="{{ old('date') }}">
+                    <input type="date" name="date" class="form-control" id="dateInput"
+                        value="{{ old('date') }}">
                     @error('date')
                         <div class="text-danger fst-italic">{{ $message }}</div>
                     @enderror
@@ -93,12 +100,14 @@
                         {{ $data->category->name }}
                         <br>
                         <span class="ft-fw-light ft-transaction-desc mt-2">
-                            ${{ format_amount($data->amount) }} - {{ date('l, d F Y', strtotime($data->transaction_date)) }}
+                            ${{ format_amount($data->amount) }} -
+                            {{ date('l, d F Y', strtotime($data->transaction_date)) }}
                         </span>
                     </h6>
                 </div>
                 <div class="ft-transaction-action align-items-end ms-auto my-auto">
-                    <form action="{{ route('transactions.delete', ['code' => $data->code]) }}" method="POST" id="transactionDelete">
+                    <form action="{{ route('transactions.delete', ['code' => $data->code]) }}" method="POST"
+                        id="transactionDelete">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-outline-danger" id="buttonDelete">
