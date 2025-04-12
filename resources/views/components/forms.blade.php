@@ -123,9 +123,7 @@
                 </div>
             </div>
         @empty
-            <h5 class="ft-fw-semibold text-center mt-5">
-                Transactions is Empty
-            </h5>
+            <h5 class="ft-fw-semibold text-center mt-5">Transactions is Empty</h5>
         @endforelse
     </div>
 </div>

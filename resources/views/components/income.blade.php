@@ -17,6 +17,10 @@
                 url: "{{ route('transactions.chart-data', ['type' => 'INCOME']) }}",
                 method: 'GET',
                 success: function(data) {
+                    if (data.length === 0) {
+                        $('#chartIncome').html('<h5 class="ft-fw-semibold text-center mt-5">No transactions available in income</h5>');
+                    }
+
                     const labels = data.map(item => item.category);
                     const series = data.map(item => parseFloat(item.total));
                     
