@@ -28,13 +28,14 @@
                     <select class="form-select {{ old('type', 'EXPENSE') == 'EXPENSE' ? '' : 'd-none' }}"
                         name="category_expense" id="categoryExpense" aria-label="Select category of expense">
                         @foreach ($data['expenses'] as $expense)
-                            <option value="{{ $expense->id }}" {{ old('category_expense') == $expense->id ? 'selected' : '' }}>
+                            <option value="{{ $expense->id }}"
+                                {{ old('category_expense') == $expense->id ? 'selected' : '' }}>
                                 {{ $expense->name }}
                             </option>
                         @endforeach
                     </select>
-                    <select class="form-select {{ old('type', 'EXPENSE') == 'INCOME' ? '' : 'd-none' }}" name="category_income"
-                        id="categoryIncome" aria-label="Select category of income">
+                    <select class="form-select {{ old('type', 'EXPENSE') == 'INCOME' ? '' : 'd-none' }}"
+                        name="category_income" id="categoryIncome" aria-label="Select category of income">
                         @foreach ($data['incomes'] as $income)
                             <option value="{{ $income->id }}"
                                 {{ old('category_income') == $income->id ? 'selected' : '' }}>

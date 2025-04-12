@@ -40,6 +40,11 @@ class HomeController extends Controller
         return view('home', compact('transactions', 'data'));
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function chartData(Request $request)
     {
         $transactions = TransactionQuery::apply($request)->with('category')

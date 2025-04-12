@@ -12,32 +12,46 @@
 
 @push('scripts')
     <script>
-        var options = {
-            series: [14, 32, 40],
-            chart: {
-                type: 'polarArea',
-            },
-            stroke: {
-                colors: ['#fff']
-            },
-            fill: {
-                opacity: 0.8
-            },
-            labels: ['Income', 'Expense'],
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }]
-        };
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ route('transactions.chart-data', ['type' => 'INCOME']) }}",
+                method: 'GET',
+                success: function(data) {
+                    const labels = data.map(item => item.category);
+                    const series = data.map(item => parseFloat(item.total));
+                    
+                    var options = {
+                        series: series,
+                        labels: labels,
+                        chart: {
+                            type: 'polarArea',
+                        },
+                        stroke: {
+                            colors: ['#fff']
+                        },
+                        fill: {
+                            opacity: 0.8
+                        },
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }]
+                    };
 
-        var chart = new ApexCharts(document.querySelector("#chartIncome"), options);
-        chart.render();
+                    var chart = new ApexCharts(document.querySelector("#chartIncome"), options);
+                    chart.render();
+                },
+                error: function(xhr, status, error) {
+                    toastr.success(error);
+                }
+            });
+        });
     </script>
 @endpush
